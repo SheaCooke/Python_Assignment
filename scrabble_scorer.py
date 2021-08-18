@@ -90,7 +90,18 @@ def scrabble_scorer(word):
 scoring_algorithms = ( {'Name': 'Simple Score', 'Description': 'Each letter is worth 1 point.', 'Score Function':'A function with a parameter for user input that returns a score.'}, {'Name':'Bonus Vowels' , 'Description': 'Vowels are 3 pts, consonants are 1 pt.', 'Score Function':'A function that returns a score based on the number of vowels and consonants.'}, {'Name': 'Scrabble', 'Description': 'The traditional scoring algorithm.', 'Score Function':'Uses the old_scrabble_scorer() function to determine the score for a given word.'}      )
 
 def scorer_prompt(word):
-    choice = int(input("Select scoring algorithm:\n0-Simple\n1-Vowel bonus\n2-Scrabble Scorer\nEnter 0, 1, or 2:  "))
+    
+    choice = input("Select scoring algorithm:\n0-Simple\n1-Vowel bonus\n2-Scrabble Scorer\nEnter 0, 1, or 2:  ")
+    run_again = None
+
+    try:
+        choice = int(choice)
+        
+    except:
+        print("\n\nMust choose 0, 1, or 2\n\n")
+        
+
+
     if choice == 0:
         print(f"\nAlgorithm name: {scoring_algorithms[choice]['Name']}\nScore for '{word}': {simple_scorer(word)}")
     elif choice == 1:
@@ -98,6 +109,9 @@ def scorer_prompt(word):
     elif choice == 2:
         print(f"\nAlgorithm name: {scoring_algorithms[choice]['Name']}\nScore for '{word}': {scrabble_scorer(word)}")
     #return scoring_algorithms[choice]["scorer_function"]
+    else:
+        print("\n\nMust choose 0, 1, or 2\n\n")
+        scorer_prompt(word)
 
 def transform(dict):
 
