@@ -11,6 +11,14 @@ OLD_POINT_STRUCTURE = {
   10: ['Q', 'Z']
 }
 
+
+
+
+
+
+
+
+
 def old_scrabble_scorer(word):
     word = word.upper()
     letterPoints = ""
@@ -21,6 +29,7 @@ def old_scrabble_scorer(word):
 
             if char in OLD_POINT_STRUCTURE[point_value]:
                 letterPoints += 'Points for {char}: {point_value}\n'.format(char = char, point_value = point_value)
+    
 
     return letterPoints
 
@@ -49,32 +58,62 @@ def vowel_bonus_scorer(word):
 
 def initial_prompt():
    print("Let's play some Scrabble!\n")
-   word = input("Enter a word: ")
+
+   valid_word = False
+
+   while not valid_word:
+       word = input("Enter a word: ")
+       for i in word:
+           if i not in string.ascii_letters and i != ' ':
+               print("The word can only contain letters.")
+               valid_word = False
+               break
+           else:
+               valid_word = True
+            
+
+    
    return word
    
+ 
 
+def scrabble_scorer(word):
+    score = 0
+    for i in word.lower():
+        for k,v in new_point_structure.items():
+            if i == k:
+                score += v
 
-# def simple_scorer():
-#     return choice
+    return score
 
-# def vowel_bonus_scorer():
-#     return 
-
-def scrabble_scorer():
-    return
 
 scoring_algorithms = ( {'Name': 'Simple Score', 'Description': 'Each letter is worth 1 point.', 'Score Function':'A function with a parameter for user input that returns a score.'}, {'Name':'Bonus Vowels' , 'Description': 'Vowels are 3 pts, consonants are 1 pt.', 'Score Function':'A function that returns a score based on the number of vowels and consonants.'}, {'Name': 'Scrabble', 'Description': 'The traditional scoring algorithm.', 'Score Function':'Uses the old_scrabble_scorer() function to determine the score for a given word.'}      )
 
 def scorer_prompt(word):
-    choice = int(input("Select scoring algorithm:\n0-Simple\n1-Vowel bonus\n2-Scrabble Scorer"))
+    choice = int(input("Select scoring algorithm:\n0-Simple\n1-Vowel bonus\n2-Scrabble Scorer\nEnter 0, 1, or 2:  "))
     if choice == 0:
-        print()
-    return scoring_algorithms[choice]
+        print(f"\nAlgorithm name: {scoring_algorithms[choice]['Name']}\nScore for '{word}': {simple_scorer(word)}")
+    elif choice == 1:
+        print(f"\nAlgorithm name: {scoring_algorithms[choice]['Name']}\nScore for '{word}': {vowel_bonus_scorer(word)}")
+    elif choice == 2:
+        print(f"\nAlgorithm name: {scoring_algorithms[choice]['Name']}\nScore for '{word}': {scrabble_scorer(word)}")
+    #return scoring_algorithms[choice]["scorer_function"]
 
-def transform():
-    return
+def transform(dict):
+
+    new_structure = {}
+
+    for k,v in dict.items():
+        for letters in v:
+            new_structure[letters.lower()] = k
+    new_structure[' '] = 0
+
+
+    return new_structure
+
+new_point_structure = transform(OLD_POINT_STRUCTURE)
 
 def run_program():
     word = initial_prompt()
-    return scorer_prompt(word)
+    scorer_prompt(word)
     # return old_scrabble_scorer(word)
