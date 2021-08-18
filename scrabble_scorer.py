@@ -98,7 +98,8 @@ def scorer_prompt(word):
         choice = int(choice)
         
     except:
-        print("\n\nMust choose 0, 1, or 2\n\n")
+        #print("\n\nMust choose 0, 1, or 2\n\n")
+        pass
         
 
 
